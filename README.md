@@ -2,6 +2,8 @@
 
 Site institucional responsivo da Cozinha São Pedro Fafá, desenvolvido com HTML, CSS, Bootstrap 5, JavaScript e ambiente Node.js com Vite.
 
+A interface segue uma abordagem mobile-first, com componentes acessíveis, navegação adaptativa e melhorias progressivas para tablet e desktop.
+
 O projeto mantém os arquivos publicados na raiz da branch `main`, permitindo continuar usando o GitHub Pages com a origem configurada como `main /root`.
 
 ## Requisitos

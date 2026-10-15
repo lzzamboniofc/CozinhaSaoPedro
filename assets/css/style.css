@@ -42,6 +42,21 @@ img {
 a {
   text-decoration: none;
 }
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1100;
+  padding: 0.75rem 1rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 600;
+  transform: translateY(-150%);
+  transition: transform 0.2s;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
 .py-section {
   padding: clamp(5rem, 10vw, 9rem) 0;
 }
@@ -67,6 +82,9 @@ a {
   letter-spacing: 0.04em;
 }
 .navbar .nav-link:hover {
+  color: var(--gold) !important;
+}
+.navbar .nav-link.active {
   color: var(--gold) !important;
 }
 .navbar-toggler {
@@ -268,6 +286,7 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.73rem;
+  min-height: 44px;
 }
 .menu-tab.active,
 .menu-tab:hover {
@@ -570,17 +589,131 @@ footer {
   outline: 3px solid var(--gold);
   outline-offset: 4px;
 }
-@media (max-width: 991px) {
-  .navbar-collapse {
-    background: #111;
-    padding: 1rem;
-    margin-top: 0.6rem;
+/* Mobile-first: estes estilos formam a base; telas maiores recebem melhorias progressivas. */
+.navbar-brand img {
+  width: 112px;
+  height: 52px;
+}
+.navbar-collapse {
+  max-height: calc(100svh - 5rem);
+  overflow-y: auto;
+  background: #111;
+  padding: 1rem;
+  margin-top: 0.6rem;
+}
+.navbar .nav-link {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.hero {
+  min-height: 100svh;
+}
+.hero-media {
+  background-position: 50% center;
+}
+.hero-content {
+  padding-top: 5.5rem;
+  padding-bottom: 2rem;
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 14vw, 3.4rem);
+}
+.hero-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.hero .btn {
+  width: 100%;
+}
+.hero-content .d-flex {
+  width: min(100%, 330px);
+}
+.scroll-cue {
+  display: none;
+}
+.py-section {
+  padding: 4.5rem 0;
+}
+.image-stack {
+  padding: 0 1.25rem 2rem 0;
+}
+.main-img {
+  height: clamp(360px, 112vw, 430px);
+}
+.floating-note {
+  width: 165px;
+  height: 140px;
+  padding: 1.1rem;
+}
+.floating-note strong {
+  font-size: 1.2rem;
+  margin: 0.25rem 0 0.6rem;
+}
+.menu-tabs {
+  gap: 1.4rem;
+  scroll-padding-inline: 1rem;
+}
+.menu-note {
+  padding: 1.5rem;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.menu-note > div {
+  align-items: flex-start;
+}
+.menu-note .btn {
+  width: 100%;
+}
+.experience-card {
+  height: 440px;
+}
+.gallery-track figure,
+.gallery-track figure:nth-child(even) {
+  flex-basis: min(82vw, 340px);
+}
+.gallery-track img {
+  height: 430px;
+}
+.slider-controls button {
+  width: 44px;
+  height: 44px;
+}
+.signature-image {
+  min-height: 420px;
+}
+.signature-copy {
+  padding: 4.5rem 1.5rem;
+}
+.map-wrap {
+  min-height: 470px;
+}
+.footer-top {
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+.footer-links {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.footer-bottom {
+  gap: 1rem;
+  flex-direction: column;
+}
+.whatsapp-float {
+  width: 52px;
+  height: 52px;
+}
+
+@media (min-width: 576px) {
+  .hero h1 {
+    font-size: clamp(3.4rem, 10vw, 5rem);
   }
-  .hero-media {
-    background-position: 54% center;
+  .hero .btn {
+    width: auto;
   }
-  .image-stack {
-    padding: 0 2rem 2rem 0;
+  .hero-content .d-flex {
+    width: auto;
   }
   .main-img {
     height: 520px;
@@ -588,105 +721,106 @@ footer {
   .floating-note {
     width: 200px;
     height: 175px;
+    padding: 1.6rem;
   }
-  .menu-note {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .signature-image {
-    min-height: 500px;
-  }
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .footer-links {
-    justify-content: flex-start;
-  }
-}
-@media (max-width: 767px) {
-  .navbar-brand img {
-    width: 112px;
-    height: 52px;
-  }
-  .hero {
-    min-height: 92svh;
-  }
-  .hero-media {
-    background-position: 50% center;
-  }
-  .hero-content {
-    padding-top: 5rem;
-  }
-  .hero h1 {
-    font-size: 3.4rem;
-  }
-  .hero-text {
-    font-size: 0.95rem;
-  }
-  .scroll-cue {
-    display: none;
-  }
-  .py-section {
-    padding: 5rem 0;
-  }
-  .main-img {
-    height: 430px;
-  }
-  .floating-note {
-    width: 175px;
-    height: 145px;
-    padding: 1.2rem;
-  }
-  .floating-note strong {
-    font-size: 1.25rem;
-    margin: 0.25rem 0 0.7rem;
-  }
-  .menu-tabs {
-    gap: 1.4rem;
-  }
-  .menu-note {
-    padding: 1.5rem;
-  }
-  .menu-note > div {
-    align-items: flex-start;
-  }
-  .experience-card {
-    height: 440px;
+  .menu-note .btn {
+    width: auto;
   }
   .gallery-track figure,
   .gallery-track figure:nth-child(even) {
-    flex-basis: 82vw;
+    flex-basis: min(70vw, 520px);
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-brand img {
+    width: 140px;
+    height: 58px;
+  }
+  .hero-content {
+    padding-top: 7rem;
+  }
+  .hero-text {
+    font-size: 1.08rem;
+    line-height: 1.8;
+  }
+  .scroll-cue {
+    display: flex;
+  }
+  .py-section {
+    padding: clamp(6rem, 9vw, 8rem) 0;
+  }
+  .gallery-track figure {
+    flex-basis: min(65vw, 650px);
+  }
+  .gallery-track figure:nth-child(even) {
+    flex-basis: min(43vw, 430px);
   }
   .gallery-track img {
-    height: 430px;
-  }
-  .signature-image {
-    min-height: 420px;
-  }
-  .signature-copy {
-    padding: 4.5rem 1.5rem;
-  }
-  .map-wrap {
-    min-height: 470px;
+    height: 520px;
   }
   .footer-bottom {
-    gap: 1rem;
-    flex-direction: column;
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-brand img {
+    width: 152px;
+    height: 62px;
+  }
+  .navbar-collapse {
+    max-height: none;
+    overflow: visible;
+    background: transparent;
+    padding: 0;
+    margin-top: 0;
+  }
+  .navbar .nav-link {
+    min-height: auto;
+  }
+  .hero-media {
+    background-position: center 46%;
+  }
+  .image-stack {
+    padding: 0 4rem 4rem 0;
+  }
+  .main-img {
+    height: 650px;
+  }
+  .floating-note {
+    width: 240px;
+    height: 210px;
+    padding: 2rem;
+  }
+  .floating-note strong {
+    font-size: 1.65rem;
+    margin: 0.45rem 0 1.3rem;
+  }
+  .menu-note {
+    padding: 2rem 2.5rem;
+    align-items: center;
+    flex-direction: row;
+  }
+  .menu-note > div {
+    align-items: center;
+  }
+  .signature-image {
+    min-height: 700px;
+  }
+  .signature-copy {
+    padding: 8vw;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+  .footer-links {
+    justify-content: flex-end;
   }
   .whatsapp-float {
-    width: 52px;
-    height: 52px;
-  }
-  .slider-controls button {
-    width: 44px;
-    height: 44px;
-  }
-  .hero .btn {
-    width: 100%;
-  }
-  .hero-content .d-flex {
-    width: min(100%, 330px);
+    width: 58px;
+    height: 58px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

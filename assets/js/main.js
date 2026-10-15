@@ -97,15 +97,33 @@ function renderMenu(category) {
     )
     .join("");
 }
-document.querySelectorAll(".menu-tab").forEach((tab) =>
-  tab.addEventListener("click", () => {
-    document
-      .querySelectorAll(".menu-tab")
-      .forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-    renderMenu(tab.dataset.category);
-  }),
-);
+const menuTabs = [...document.querySelectorAll(".menu-tab")];
+
+function activateMenuTab(tab) {
+  menuTabs.forEach((item) => {
+    const isActive = item === tab;
+    item.classList.toggle("active", isActive);
+    item.setAttribute("aria-selected", String(isActive));
+    item.tabIndex = isActive ? 0 : -1;
+  });
+  menuItems.setAttribute("aria-labelledby", tab.id);
+  renderMenu(tab.dataset.category);
+}
+
+menuTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => activateMenuTab(tab));
+  tab.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const nextIndex = event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? menuTabs.length - 1
+        : (index + (event.key === "ArrowRight" ? 1 : -1) + menuTabs.length) % menuTabs.length;
+    menuTabs[nextIndex].focus();
+    activateMenuTab(menuTabs[nextIndex]);
+  });
+});
 renderMenu("almoco");
 const navbar = document.querySelector(".navbar");
 addEventListener(
@@ -113,12 +131,36 @@ addEventListener(
   () => navbar.classList.toggle("scrolled", scrollY > 45),
   { passive: true },
 );
-document.querySelectorAll(".navbar .nav-link").forEach((link) =>
+const navLinks = [...document.querySelectorAll(".navbar .nav-link[href^='#']")];
+navLinks.forEach((link) =>
   link.addEventListener("click", () => {
     const open = document.querySelector(".navbar-collapse.show");
-    if (open) bootstrap.Collapse.getOrCreateInstance(open).hide();
+    if (open && window.bootstrap) window.bootstrap.Collapse.getOrCreateInstance(open).hide();
   }),
 );
+
+const sections = navLinks
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach((link) => {
+        const active = link.getAttribute("href") === `#${visible.target.id}`;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    },
+    { rootMargin: "-30% 0px -55%", threshold: [0, 0.2, 0.5] },
+  );
+  sections.forEach((section) => sectionObserver.observe(section));
+}
 const revealItems = document.querySelectorAll(".reveal");
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(

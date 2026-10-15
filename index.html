@@ -43,6 +43,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
   <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navegação principal">
     <div class="container-fluid px-lg-5">
       <a class="navbar-brand" href="#inicio"><img src="assets/img/logo-cozinha-sao-pedro.png"
@@ -78,7 +79,7 @@
     </div>
   </nav>
 
-  <main>
+  <main id="conteudo-principal">
     <header id="inicio" class="hero">
       <div class="hero-media"></div>
       <div class="hero-noise"></div>
@@ -151,14 +152,14 @@
           </div>
         </div>
         <div class="menu-tabs reveal" role="tablist" aria-label="Categorias do cardápio">
-          <button class="menu-tab active" data-category="almoco" type="button">
-            Almoço</button><button class="menu-tab" data-category="entradas" type="button">
-            Para começar</button><button class="menu-tab" data-category="happy" type="button">
-            Happy hour</button><button class="menu-tab" data-category="doces" type="button">
+          <button id="tab-almoco" class="menu-tab active" data-category="almoco" type="button" role="tab" aria-selected="true" aria-controls="menuItems">
+            Almoço</button><button id="tab-entradas" class="menu-tab" data-category="entradas" type="button" role="tab" aria-selected="false" aria-controls="menuItems">
+            Para começar</button><button id="tab-happy" class="menu-tab" data-category="happy" type="button" role="tab" aria-selected="false" aria-controls="menuItems">
+            Happy hour</button><button id="tab-doces" class="menu-tab" data-category="doces" type="button" role="tab" aria-selected="false" aria-controls="menuItems">
             Final feliz
           </button>
         </div>
-        <div id="menuItems" class="row g-4 mt-2" aria-live="polite"></div>
+        <div id="menuItems" class="row g-4 mt-2" role="tabpanel" aria-labelledby="tab-almoco" aria-live="polite"></div>
         <div class="menu-note reveal">
           <div>
             <span class="note-mark">✦</span>
@@ -226,8 +227,8 @@
             <h2>Entre arte e mesa.</h2>
           </div>
           <div class="slider-controls">
-            <button id="galleryPrev" aria-label="Imagem anterior">←</button><button id="galleryNext"
-              aria-label="Próxima imagem">→</button>
+            <button id="galleryPrev" type="button" aria-label="Imagem anterior">←</button><button id="galleryNext"
+              type="button" aria-label="Próxima imagem">→</button>
           </div>
         </div>
         <div class="gallery-track" id="galleryTrack">
