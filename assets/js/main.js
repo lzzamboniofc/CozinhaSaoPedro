@@ -178,14 +178,31 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((el) => el.classList.add("visible"));
 }
 const track = document.querySelector("#galleryTrack");
-document
-  .querySelector("#galleryNext")
-  .addEventListener("click", () =>
-    track.scrollBy({ left: track.clientWidth * 0.7, behavior: "smooth" }),
+const galleryItems = [...track.querySelectorAll("figure")];
+
+function galleryGutter() {
+  return Number.parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+}
+
+function currentGalleryIndex() {
+  const target = track.scrollLeft + galleryGutter();
+  return galleryItems.reduce((closest, item, index) =>
+    Math.abs(item.offsetLeft - target) < Math.abs(galleryItems[closest].offsetLeft - target)
+      ? index
+      : closest, 0);
+}
+
+function goToGalleryItem(direction) {
+  const nextIndex = Math.min(
+    galleryItems.length - 1,
+    Math.max(0, currentGalleryIndex() + direction),
   );
-document
-  .querySelector("#galleryPrev")
-  .addEventListener("click", () =>
-    track.scrollBy({ left: -track.clientWidth * 0.7, behavior: "smooth" }),
-  );
+  track.scrollTo({
+    left: galleryItems[nextIndex].offsetLeft - galleryGutter(),
+    behavior: "smooth",
+  });
+}
+
+document.querySelector("#galleryNext").addEventListener("click", () => goToGalleryItem(1));
+document.querySelector("#galleryPrev").addEventListener("click", () => goToGalleryItem(-1));
 document.querySelector("#currentYear").textContent = new Date().getFullYear();
