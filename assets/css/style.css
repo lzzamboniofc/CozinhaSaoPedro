@@ -8,6 +8,8 @@
   --white: #fff;
   --serif: "Playfair Display", serif;
   --sans: "DM Sans", sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 * {
   box-sizing: border-box;
@@ -72,7 +74,10 @@ a {
 }
 .navbar {
   padding: 1.05rem 0;
-  transition: 0.35s;
+  transition:
+    padding 0.32s var(--ease-standard),
+    background-color 0.32s var(--ease-standard),
+    box-shadow 0.32s var(--ease-standard);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent);
 }
 .navbar.scrolled {
@@ -110,6 +115,14 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.09em;
   font-weight: 600;
+  transition:
+    color 0.22s var(--ease-standard),
+    background-color 0.22s var(--ease-standard),
+    border-color 0.22s var(--ease-standard),
+    transform 0.22s var(--ease-out);
+}
+.btn:hover {
+  transform: translateY(-2px);
 }
 .btn-reserva {
   background: var(--gold);
@@ -309,7 +322,9 @@ h3 {
   border-top: 1px solid #3a3933;
   padding: 1.6rem 0;
   height: 100%;
-  transition: 0.25s;
+  transition:
+    padding-left 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-standard);
 }
 .menu-item:hover {
   padding-left: 0.8rem;
@@ -401,11 +416,15 @@ h3 {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  transition: 0.25s;
+  transition:
+    color 0.25s var(--ease-standard),
+    background-color 0.25s var(--ease-standard),
+    transform 0.25s var(--ease-out);
 }
 .experience-card > a:hover {
   background: #fff;
   color: #111;
+  transform: translateY(-2px);
 }
 .exp-lunch {
   background-image: url("../img/ambiente2.webp");
@@ -426,7 +445,7 @@ h3 {
   max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
-  padding-left: max(1rem, calc((100% - 1140px) / 2));
+  padding-left: 0.75rem;
   padding-right: 5%;
   scroll-snap-type: x mandatory;
   overscroll-behavior-inline: contain;
@@ -464,12 +483,17 @@ h3 {
   font-size: 1.3rem;
   display: grid;
   place-items: center;
-  transition: 0.2s ease;
+  transition:
+    color 0.22s var(--ease-standard),
+    background-color 0.22s var(--ease-standard),
+    border-color 0.22s var(--ease-standard),
+    transform 0.22s var(--ease-out);
 }
 .slider-controls button:hover {
   background: var(--ink);
   color: var(--white);
   border-color: var(--ink);
+  transform: translateY(-2px);
 }
 .gallery-tip {
   font-size: 0.72rem;
@@ -606,12 +630,14 @@ footer {
   opacity: 0;
   transform: translateY(35px);
   transition:
-    opacity 0.7s,
-    transform 0.7s;
+    opacity 0.7s var(--ease-standard),
+    transform 0.7s var(--ease-out);
+  will-change: opacity, transform;
 }
 .reveal.visible {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 :focus-visible {
   outline: 3px solid var(--gold);
@@ -628,6 +654,22 @@ footer {
   background: #111;
   padding: 1rem;
   margin-top: 0.6rem;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.navbar-collapse.collapsing {
+  overflow: hidden;
+  transition: height 0.3s var(--ease-out);
+  will-change: height;
+}
+.navbar-toggler {
+  transition:
+    border-color 0.22s var(--ease-standard),
+    background-color 0.22s var(--ease-standard),
+    transform 0.22s var(--ease-out);
+}
+.navbar-toggler:active {
+  transform: scale(0.96);
 }
 .navbar .nav-link {
   min-height: 44px;
@@ -734,6 +776,9 @@ footer {
 }
 
 @media (min-width: 576px) {
+  .gallery-track {
+    padding-left: max(0.75rem, calc((100% - 540px) / 2 + 0.75rem));
+  }
   .hero h1 {
     font-size: clamp(3.4rem, 10vw, 5rem);
   }
@@ -761,6 +806,9 @@ footer {
 }
 
 @media (min-width: 768px) {
+  .gallery-track {
+    padding-left: max(0.75rem, calc((100% - 720px) / 2 + 0.75rem));
+  }
   .navbar-brand img {
     width: 140px;
     height: 58px;
@@ -793,6 +841,9 @@ footer {
 }
 
 @media (min-width: 992px) {
+  .gallery-track {
+    padding-left: max(0.75rem, calc((100% - 960px) / 2 + 0.75rem));
+  }
   .navbar-brand img {
     width: 152px;
     height: 62px;
@@ -803,6 +854,7 @@ footer {
     background: transparent;
     padding: 0;
     margin-top: 0;
+    transform: none;
   }
   .navbar .nav-link {
     min-height: auto;
@@ -849,6 +901,18 @@ footer {
   .whatsapp-float {
     width: 58px;
     height: 58px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gallery-track {
+    padding-left: max(0.75rem, calc((100% - 1140px) / 2 + 0.75rem));
+  }
+}
+
+@media (min-width: 1400px) {
+  .gallery-track {
+    padding-left: max(0.75rem, calc((100% - 1320px) / 2 + 0.75rem));
   }
 }
 @media (prefers-reduced-motion: reduce) {
